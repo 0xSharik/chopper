@@ -27,6 +27,8 @@ from src.chemistry.modifier_engine import generate_variants
 from src.gui.comparison_utils import generate_comparison_table, generate_delta_summary
 from src.gui.editor_tab import render_editor_tab
 from src.gui.comparison_tab import render_comparison_tab
+from src.gui.md_tab import render_md_tab
+from src.gui.validation_tab import render_validation_tab
 
 # Page config
 st.set_page_config(
@@ -125,7 +127,7 @@ def main():
     # Mode selection
     mode = st.radio(
         "Select Mode:",
-        ["🔬 Molecule Screening", "🧪 Molecule Modification", "⚗️ Advanced Editor", "📊 Compare Candidates"],
+        ["🔬 Molecule Screening", "🧪 Molecule Modification", "⚗️ Advanced Editor", "📊 Compare Candidates", "🧊 MD Simulation", "📈 Model Validation"],
         horizontal=True
     )
     
@@ -138,8 +140,12 @@ def main():
         render_modification_mode()
     elif mode == "⚗️ Advanced Editor":
         render_editor_tab(engines)
-    else:
+    elif mode == "📊 Compare Candidates":
         render_comparison_tab(engines)
+    elif mode == "🧊 MD Simulation":
+        render_md_tab()
+    elif mode == "📈 Model Validation":
+        render_validation_tab()
 
 def render_screening_mode():
     """Original screening interface."""

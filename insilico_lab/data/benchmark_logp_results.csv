@@ -1,0 +1,4 @@
+name,smiles,literature_logp,predicted_logp,error,abs_error
+Aspirin,CC(=O)Oc1ccccc1C(=O)O,1.19,1.3101,0.1201000000000001,0.1201000000000001
+Caffeine,Cn1cnc2n(C)c(=O)n(C)c(=O)c12,-0.07,-1.0293,-0.9593,0.9593
+Ibuprofen,CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O,3.97,3.073200000000001,-0.8967999999999994,0.8967999999999994

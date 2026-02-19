@@ -22,3 +22,9 @@ deepchem
 
 # Utilities
 tqdm
+
+# Molecular Dynamics (Phase 1)
+openmm
+openff-toolkit
+openff-interchange
+mdtraj
