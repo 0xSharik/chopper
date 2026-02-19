@@ -1,0 +1,10 @@
+{
+    "total_rows": 1098,
+    "total_columns": 2060,
+    "fingerprint_columns": 2048,
+    "descriptor_columns": 10,
+    "nan_count": 0,
+    "inf_count": 0,
+    "mean_logS": -2.9631056466302366,
+    "std_logS": 1.9761953201163502
+}

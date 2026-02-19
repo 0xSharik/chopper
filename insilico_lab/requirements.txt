@@ -1,0 +1,24 @@
+# Cheminformatics
+rdkit
+
+# Data Manipulation
+pandas
+numpy
+
+# Visualization
+matplotlib
+seaborn
+streamlit
+py3Dmol
+plotly
+
+# Machine Learning
+scikit-learn
+xgboost
+chembl_webresource_client
+PyTDC
+joblib
+deepchem
+
+# Utilities
+tqdm

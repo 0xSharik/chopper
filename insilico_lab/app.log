@@ -1,0 +1,344 @@
+2026-02-13 21:05:35,470 - __main__ - INFO - Starting data cleaning for D:\chopper\project\insilico_lab\src\data_pipeline\../../data/raw/esol.csv
+2026-02-13 21:05:35,479 - __main__ - INFO - Standardizing SMILES...
+2026-02-13 21:05:36,776 - __main__ - INFO - Cleaned dataset saved to D:\chopper\project\insilico_lab\src\data_pipeline\../../data/processed/esol_cleaned.csv
+2026-02-13 21:10:30,948 - __main__ - INFO - Generating QC report for D:\chopper\project\insilico_lab\data/processed/esol_cleaned.csv
+2026-02-13 21:10:30,956 - __main__ - INFO - Statistics saved to D:\chopper\project\insilico_lab\data/metadata\esol_stats.json
+2026-02-13 21:10:33,943 - __main__ - INFO - Distribution plot saved to D:\chopper\project\insilico_lab\data/metadata\esol_distribution.png
+2026-02-13 22:57:55,243 - __main__ - INFO - Building features from D:\chopper\project\insilico_lab\data/processed/esol_cleaned.csv
+2026-02-13 22:57:55,251 - __main__ - INFO - Loaded 1098 molecules
+2026-02-13 22:57:59,530 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/esol_features.csv
+2026-02-14 01:55:54,361 - __main__ - INFO - Starting Lipophilicity data cleaning pipeline...
+2026-02-14 01:55:54,361 - __main__ - ERROR - Input file not found: D:\chopper\data/raw/lipophilicity.csv
+2026-02-14 01:56:33,918 - __main__ - INFO - Starting Lipophilicity data cleaning pipeline...
+2026-02-14 01:56:33,928 - __main__ - INFO - Loaded 4200 rows
+2026-02-14 01:56:33,929 - __main__ - INFO - Standardizing SMILES...
+2026-02-14 01:56:38,129 - __main__ - INFO - Removed 0 invalid molecules
+2026-02-14 01:56:38,130 - __main__ - INFO - Removed 98 duplicates
+2026-02-14 01:56:38,132 - __main__ - INFO - Removed 27 outliers (IQR method)
+2026-02-14 01:56:38,144 - __main__ - INFO - Cleaning complete. Final count: 4075
+2026-02-14 01:57:04,883 - __main__ - INFO - Building features from D:\chopper\project\insilico_lab\data/processed/lipophilicity_cleaned.csv
+2026-02-14 01:57:18,309 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/lipophilicity_features.csv
+2026-02-14 02:09:24,641 - __main__ - INFO - Starting pKa data cleaning pipeline...
+2026-02-14 02:09:24,752 - __main__ - INFO - Loaded 24211 rows
+2026-02-14 02:09:24,769 - __main__ - INFO - Standardizing SMILES...
+2026-02-14 02:09:44,096 - __main__ - INFO - Consolidated 13465 duplicates (averaged pKa)
+2026-02-14 02:09:44,097 - __main__ - INFO - Removed 186 outliers (range -5 to 20)
+2026-02-14 02:09:44,110 - __main__ - INFO - Cleaning complete. Final count: 10366
+2026-02-14 02:10:51,392 - __main__ - INFO - Building pKa features from D:\chopper\project\insilico_lab\data/processed/pka_cleaned.csv
+2026-02-14 02:11:32,257 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/pka_features.csv
+2026-02-14 02:23:30,887 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:23:31,994 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 403: Forbidden
+2026-02-14 02:23:31,995 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:23:31,995 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:23:33,857 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:24:32,045 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:24:32,523 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 404: Not Found
+2026-02-14 02:24:32,523 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:24:32,523 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:24:34,471 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:25:05,041 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:25:05,616 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 404: Not Found
+2026-02-14 02:25:05,616 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:25:05,617 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:25:07,723 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:26:14,499 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:26:15,569 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 404: Not Found
+2026-02-14 02:26:15,569 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:26:15,570 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:26:17,837 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:28:13,735 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:28:15,109 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 404: Not Found
+2026-02-14 02:28:15,110 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:28:15,110 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:28:16,967 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:28:54,581 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:28:55,025 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 404: Not Found
+2026-02-14 02:28:55,026 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:28:55,026 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:28:56,635 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:30:00,216 - __main__ - INFO - Fetching Caco-2 data (Wang via TDC Mirror/Alternative)...
+2026-02-14 02:30:00,707 - __main__ - ERROR - Failed to fetch Caco-2 data from S3: HTTP Error 404: Not Found
+2026-02-14 02:30:00,707 - __main__ - INFO - Trying backup TDC GitHub Raw URL...
+2026-02-14 02:30:00,707 - __main__ - WARNING - Caco-2 download failed. Simulating data using BBB molecules as source...
+2026-02-14 02:30:00,722 - __main__ - WARNING - GENERATED SYNTHETIC Caco-2 data at D:\chopper\project\insilico_lab\data/raw/caco2.csv (2050 rows)
+2026-02-14 02:30:00,723 - __main__ - INFO - Fetching BBB data (MoleculeNet via direct URL)...
+2026-02-14 02:30:02,430 - __main__ - INFO - Saved BBB data (DeepChem) to D:\chopper\project\insilico_lab\data/raw/bbbp.csv (2050 rows)
+2026-02-14 02:31:47,370 - __main__ - INFO - Cleaning Caco-2 data from D:\chopper\project\insilico_lab\data/raw/caco2.csv...
+2026-02-14 02:31:47,374 - __main__ - INFO - Original rows: 2050
+2026-02-14 02:31:47,458 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: O=N([O-])C1=C(CN=C1NCCSCc2ncccc2)Cc3ccccc3
+2026-02-14 02:31:47,460 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(nc(NC(N)=[NH2])sc1)CSCCNC(=[NH]C#N)NC
+2026-02-14 02:31:47,853 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: Cc1nc(sc1)\[NH]=C(\N)N
+2026-02-14 02:31:48,090 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(CSCCN\C(NC)=[NH]\C#N)nc1\[NH]=C(\N)N
+2026-02-14 02:31:48,122 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1c(c(ncc1)CSCCN\C(=[NH]\C#N)NCC)Br
+2026-02-14 02:31:48,124 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1ccccc1
+2026-02-14 02:31:48,125 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N
+2026-02-14 02:31:48,125 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)NC(C)=O
+2026-02-14 02:31:48,125 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N\C(NC)=[NH]\C#N
+2026-02-14 02:31:48,125 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(nc1\[NH]=C(\N)N)C
+2026-02-14 02:31:48,162 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(cc(N\C(=[NH]\c2cccc(c2)CC)C)ccc1)CC
+2026-02-14 02:31:49,939 - __main__ - INFO - Valid SMILES: 2039
+2026-02-14 02:31:49,941 - __main__ - INFO - Consolidated duplicates: 1943
+2026-02-14 02:31:49,942 - __main__ - INFO - Range filtered (-8 to -3): 1920
+2026-02-14 02:31:49,944 - __main__ - INFO - Final Cleaned Caco-2: 1920
+2026-02-14 02:31:49,949 - __main__ - INFO - Cleaning BBB data from D:\chopper\project\insilico_lab\data/raw/bbbp.csv...
+2026-02-14 02:31:49,956 - __main__ - INFO - Original rows: 2050
+2026-02-14 02:31:50,049 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: O=N([O-])C1=C(CN=C1NCCSCc2ncccc2)Cc3ccccc3
+2026-02-14 02:31:50,051 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(nc(NC(N)=[NH2])sc1)CSCCNC(=[NH]C#N)NC
+2026-02-14 02:31:50,441 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: Cc1nc(sc1)\[NH]=C(\N)N
+2026-02-14 02:31:50,676 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(CSCCN\C(NC)=[NH]\C#N)nc1\[NH]=C(\N)N
+2026-02-14 02:31:50,708 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1c(c(ncc1)CSCCN\C(=[NH]\C#N)NCC)Br
+2026-02-14 02:31:50,711 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1ccccc1
+2026-02-14 02:31:50,711 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N
+2026-02-14 02:31:50,711 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)NC(C)=O
+2026-02-14 02:31:50,711 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N\C(NC)=[NH]\C#N
+2026-02-14 02:31:50,711 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(nc1\[NH]=C(\N)N)C
+2026-02-14 02:31:50,752 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(cc(N\C(=[NH]\c2cccc(c2)CC)C)ccc1)CC
+2026-02-14 02:31:52,401 - __main__ - INFO - Removing 14 molecules with conflicting BBB labels
+2026-02-14 02:31:52,404 - __main__ - INFO - Final Cleaned BBB: 1929
+2026-02-14 02:31:52,405 - __main__ - INFO - Class Balance: 
+BBB
+1    0.764126
+0    0.235874
+Name: proportion, dtype: float64
+2026-02-14 02:34:25,373 - __main__ - INFO - Building ADME features from D:\chopper\project\insilico_lab\data/processed/caco2_cleaned.csv
+2026-02-14 02:34:26,862 - src.feature_engine.descriptor_engine - WARNING - Failed to parse SMILES: CC(Cc1ccccc1)n1cc(=NC(=O)Nc2ccccc2)on1
+2026-02-14 02:34:35,886 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/caco2_features.csv
+2026-02-14 02:34:35,951 - __main__ - INFO - Building ADME features from D:\chopper\project\insilico_lab\data/processed/bbbp_cleaned.csv
+2026-02-14 02:34:45,372 - src.feature_engine.descriptor_engine - WARNING - Failed to parse SMILES: CC(Cc1ccccc1)n1cc(=NC(=O)Nc2ccccc2)on1
+2026-02-14 02:34:46,772 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/bbbp_features.csv
+2026-02-14 02:35:21,855 - __main__ - INFO - Starting Caco-2 model training...
+2026-02-14 02:35:22,193 - __main__ - INFO - Loaded 1919 samples
+2026-02-14 02:35:22,247 - __main__ - INFO - Training with 2072 features
+2026-02-14 02:35:24,901 - __main__ - INFO - Test RMSE: 0.9800
+2026-02-14 02:35:24,901 - __main__ - INFO - Test R2: -0.0063
+2026-02-14 02:35:24,908 - __main__ - INFO - Model saved to D:\chopper\project\insilico_lab\models/caco2\caco2_model.json
+2026-02-14 02:36:23,562 - __main__ - INFO - Starting BBB model training...
+2026-02-14 02:36:23,881 - __main__ - INFO - Loaded 1928 samples
+2026-02-14 02:36:23,936 - __main__ - INFO - Training with 2072 features
+2026-02-14 02:36:24,064 - __main__ - INFO - Class ratio: 364 Neg / 1178 Pos. Scale weight: 0.31
+2026-02-14 02:36:28,228 - __main__ - INFO - Test Accuracy: 0.8860
+2026-02-14 02:36:28,228 - __main__ - INFO - Test ROC-AUC: 0.9327
+2026-02-14 02:36:28,228 - __main__ - INFO - Confusion Matrix:
+[[ 73  18]
+ [ 26 269]]
+2026-02-14 02:36:28,228 - __main__ - INFO - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.74      0.80      0.77        91
+           1       0.94      0.91      0.92       295
+
+    accuracy                           0.89       386
+   macro avg       0.84      0.86      0.85       386
+weighted avg       0.89      0.89      0.89       386
+
+2026-02-14 02:36:28,254 - __main__ - INFO - Model saved to D:\chopper\project\insilico_lab\models/bbb\bbb_model.json
+2026-02-14 02:54:42,820 - __main__ - INFO - Fetching ClinTox...
+2026-02-14 02:54:44,107 - __main__ - INFO - ClinTox saved: 1484 rows
+2026-02-14 02:54:44,107 - __main__ - INFO - Fetching hERG...
+2026-02-14 02:54:45,190 - __main__ - WARNING - TDC hERG download failed. Trying backup...
+2026-02-14 02:54:45,190 - __main__ - WARNING - Using synthetic hERG data (derived from BBB) for MVP.
+2026-02-14 02:54:45,203 - __main__ - INFO - Created SYNTHETIC hERG data.
+2026-02-14 02:55:45,755 - __main__ - INFO - Cleaning ClinTox...
+2026-02-14 02:55:45,759 - __main__ - ERROR - CT_TOX_FDA_APPROVED_FAILED column not found in ClinTox
+2026-02-14 02:55:45,759 - __main__ - INFO - Cleaning hERG...
+2026-02-14 02:55:45,836 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: O=N([O-])C1=C(CN=C1NCCSCc2ncccc2)Cc3ccccc3
+2026-02-14 02:55:45,837 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(nc(NC(N)=[NH2])sc1)CSCCNC(=[NH]C#N)NC
+2026-02-14 02:55:46,182 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: Cc1nc(sc1)\[NH]=C(\N)N
+2026-02-14 02:55:46,386 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(CSCCN\C(NC)=[NH]\C#N)nc1\[NH]=C(\N)N
+2026-02-14 02:55:46,418 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1c(c(ncc1)CSCCN\C(=[NH]\C#N)NCC)Br
+2026-02-14 02:55:46,421 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1ccccc1
+2026-02-14 02:55:46,421 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N
+2026-02-14 02:55:46,421 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)NC(C)=O
+2026-02-14 02:55:46,421 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N\C(NC)=[NH]\C#N
+2026-02-14 02:55:46,421 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(nc1\[NH]=C(\N)N)C
+2026-02-14 02:55:46,461 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(cc(N\C(=[NH]\c2cccc(c2)CC)C)ccc1)CC
+2026-02-14 02:55:47,987 - __main__ - INFO - hERG cleaned: 1943 rows
+2026-02-14 02:56:14,357 - __main__ - INFO - Building Tox features from D:\chopper\project\insilico_lab\data/processed/clintox_cleaned.csv
+2026-02-14 02:56:14,357 - __main__ - ERROR - Input file not found: D:\chopper\project\insilico_lab\data/processed/clintox_cleaned.csv
+2026-02-14 02:56:14,358 - __main__ - INFO - Building Tox features from D:\chopper\project\insilico_lab\data/processed/herg_cleaned.csv
+2026-02-14 02:56:24,570 - src.feature_engine.descriptor_engine - WARNING - Failed to parse SMILES: CC(Cc1ccccc1)n1cc(=NC(=O)Nc2ccccc2)on1
+2026-02-14 02:56:26,190 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/herg_features.csv
+2026-02-14 02:58:08,782 - __main__ - INFO - Cleaning Caco-2 data from D:\chopper\project\insilico_lab\data/raw/caco2.csv...
+2026-02-14 02:59:49,439 - __main__ - INFO - Cleaning Caco-2 data from D:\chopper\project\insilico_lab\data/raw/caco2.csv...
+2026-02-14 02:59:49,446 - __main__ - INFO - Original rows: 2050
+2026-02-14 02:59:49,553 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: O=N([O-])C1=C(CN=C1NCCSCc2ncccc2)Cc3ccccc3
+2026-02-14 02:59:49,555 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(nc(NC(N)=[NH2])sc1)CSCCNC(=[NH]C#N)NC
+2026-02-14 02:59:50,032 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: Cc1nc(sc1)\[NH]=C(\N)N
+2026-02-14 02:59:50,305 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(CSCCN\C(NC)=[NH]\C#N)nc1\[NH]=C(\N)N
+2026-02-14 02:59:50,340 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1c(c(ncc1)CSCCN\C(=[NH]\C#N)NCC)Br
+2026-02-14 02:59:50,344 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1ccccc1
+2026-02-14 02:59:50,344 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N
+2026-02-14 02:59:50,344 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)NC(C)=O
+2026-02-14 02:59:50,344 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N\C(NC)=[NH]\C#N
+2026-02-14 02:59:50,344 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(nc1\[NH]=C(\N)N)C
+2026-02-14 02:59:50,386 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(cc(N\C(=[NH]\c2cccc(c2)CC)C)ccc1)CC
+2026-02-14 02:59:52,080 - __main__ - INFO - Valid SMILES: 2039
+2026-02-14 02:59:52,084 - __main__ - INFO - Consolidated duplicates: 1943
+2026-02-14 02:59:52,085 - __main__ - INFO - Range filtered (-10 to -2): 1941
+2026-02-14 02:59:52,087 - __main__ - INFO - Final Cleaned Caco-2: 1925
+2026-02-14 02:59:52,093 - __main__ - INFO - Cleaning BBB data from D:\chopper\project\insilico_lab\data/raw/bbbp.csv...
+2026-02-14 02:59:52,099 - __main__ - INFO - Original rows: 2050
+2026-02-14 02:59:52,175 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: O=N([O-])C1=C(CN=C1NCCSCc2ncccc2)Cc3ccccc3
+2026-02-14 02:59:52,176 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(nc(NC(N)=[NH2])sc1)CSCCNC(=[NH]C#N)NC
+2026-02-14 02:59:52,619 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: Cc1nc(sc1)\[NH]=C(\N)N
+2026-02-14 02:59:52,894 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(CSCCN\C(NC)=[NH]\C#N)nc1\[NH]=C(\N)N
+2026-02-14 02:59:52,929 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1c(c(ncc1)CSCCN\C(=[NH]\C#N)NCC)Br
+2026-02-14 02:59:52,931 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1ccccc1
+2026-02-14 02:59:52,931 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N
+2026-02-14 02:59:52,931 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)NC(C)=O
+2026-02-14 02:59:52,932 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N\C(NC)=[NH]\C#N
+2026-02-14 02:59:52,932 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(nc1\[NH]=C(\N)N)C
+2026-02-14 02:59:52,971 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(cc(N\C(=[NH]\c2cccc(c2)CC)C)ccc1)CC
+2026-02-14 02:59:54,627 - __main__ - INFO - Removing 14 molecules with conflicting BBB labels
+2026-02-14 02:59:54,629 - __main__ - INFO - Final Cleaned BBB: 1929
+2026-02-14 02:59:54,630 - __main__ - INFO - Class Balance: 
+BBB
+1    0.764126
+0    0.235874
+Name: proportion, dtype: float64
+2026-02-14 03:01:13,815 - __main__ - INFO - Fetching Caco-2 (TDC Caco2_Wang)...
+2026-02-14 03:01:13,815 - __main__ - WARNING - PyTDC not installed/import error. Using S3 direct download...
+2026-02-14 03:01:14,834 - __main__ - ERROR - Failed to download Caco-2 from S3: HTTP Error 403: Forbidden
+2026-02-14 03:01:14,835 - __main__ - INFO - Fetching BBB (DeepChem)...
+2026-02-14 03:01:17,363 - __main__ - INFO - BBB downloaded: 2050 rows
+2026-02-14 03:04:08,985 - __main__ - INFO - Cleaning ClinTox...
+2026-02-14 03:04:09,009 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: [NH4][Pt]([NH4])(Cl)Cl
+2026-02-14 03:04:09,314 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1ccc(cc1)n2c(=O)c(c(=O)n2c3ccccc3)CCS(=O)c4ccccc4
+2026-02-14 03:04:10,272 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: CCCCc1c(=O)n(n(c1=O)c2ccc(cc2)O)c3ccccc3
+2026-02-14 03:04:10,273 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: CCCCc1c(=O)n(n(c1=O)c2ccccc2)c3ccccc3
+2026-02-14 03:04:10,538 - __main__ - INFO - ClinTox cleaned: 1424 rows
+2026-02-14 03:04:10,538 - __main__ - INFO - Cleaning hERG...
+2026-02-14 03:04:10,596 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: O=N([O-])C1=C(CN=C1NCCSCc2ncccc2)Cc3ccccc3
+2026-02-14 03:04:10,598 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(nc(NC(N)=[NH2])sc1)CSCCNC(=[NH]C#N)NC
+2026-02-14 03:04:10,962 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: Cc1nc(sc1)\[NH]=C(\N)N
+2026-02-14 03:04:11,231 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(CSCCN\C(NC)=[NH]\C#N)nc1\[NH]=C(\N)N
+2026-02-14 03:04:11,259 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1c(c(ncc1)CSCCN\C(=[NH]\C#N)NCC)Br
+2026-02-14 03:04:11,263 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1ccccc1
+2026-02-14 03:04:11,263 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N
+2026-02-14 03:04:11,263 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)NC(C)=O
+2026-02-14 03:04:11,263 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: n1c(csc1\[NH]=C(\N)N)c1cccc(c1)N\C(NC)=[NH]\C#N
+2026-02-14 03:04:11,263 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: s1cc(nc1\[NH]=C(\N)N)C
+2026-02-14 03:04:11,301 - src.data_pipeline.standardize - WARNING - Failed to parse SMILES: c1(cc(N\C(=[NH]\c2cccc(c2)CC)C)ccc1)CC
+2026-02-14 03:04:12,862 - __main__ - INFO - hERG cleaned: 1943 rows
+2026-02-14 03:04:38,371 - __main__ - INFO - Building Tox features from D:\chopper\project\insilico_lab\data/processed/clintox_cleaned.csv
+2026-02-14 03:04:46,675 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/clintox_features.csv
+2026-02-14 03:04:46,715 - __main__ - INFO - Building Tox features from D:\chopper\project\insilico_lab\data/processed/herg_cleaned.csv
+2026-02-14 03:04:57,457 - src.feature_engine.descriptor_engine - WARNING - Failed to parse SMILES: CC(Cc1ccccc1)n1cc(=NC(=O)Nc2ccccc2)on1
+2026-02-14 03:04:59,017 - __main__ - INFO - Saved features to D:\chopper\project\insilico_lab\data/processed/herg_features.csv
+2026-02-14 03:07:25,719 - __main__ - INFO - Loading features from D:\chopper\project\insilico_lab\data/processed/herg_features.csv
+2026-02-14 03:07:25,933 - __main__ - INFO - Loaded 1942 samples
+2026-02-14 03:07:25,941 - __main__ - INFO - Features shape: (1942, 2072)
+2026-02-14 03:07:25,942 - __main__ - INFO - Class distribution:
+hERG
+1       0.000515
+2       0.000515
+3       0.000515
+4       0.000515
+5       0.000515
+          ...   
+2048    0.000515
+2049    0.000515
+2050    0.000515
+2052    0.000515
+2053    0.000515
+Name: proportion, Length: 1942, dtype: float64
+2026-02-14 03:08:05,651 - __main__ - INFO - Loading features from D:\chopper\project\insilico_lab\data/processed/herg_features.csv
+2026-02-14 03:08:05,875 - __main__ - INFO - Loaded 1942 samples
+2026-02-14 03:08:05,882 - __main__ - INFO - Features shape: (1942, 2072)
+2026-02-14 03:08:05,883 - __main__ - INFO - Class distribution:
+hERG
+1       0.000515
+2       0.000515
+3       0.000515
+4       0.000515
+5       0.000515
+          ...   
+2048    0.000515
+2049    0.000515
+2050    0.000515
+2052    0.000515
+2053    0.000515
+Name: proportion, Length: 1942, dtype: float64
+2026-02-14 03:08:09,780 - __main__ - INFO - Loading features from D:\chopper\project\insilico_lab\data/processed/clintox_features.csv
+2026-02-14 03:08:09,945 - __main__ - INFO - Loaded 1424 samples
+2026-02-14 03:08:09,951 - __main__ - INFO - Features shape: (1424, 2072)
+2026-02-14 03:08:09,952 - __main__ - INFO - Class distribution:
+ClinTox
+0    0.926966
+1    0.073034
+Name: proportion, dtype: float64
+2026-02-14 03:08:10,075 - __main__ - INFO - Scale pos weight: 12.72
+2026-02-14 03:08:10,076 - __main__ - INFO - Training XGBoost classifier...
+2026-02-14 03:08:12,808 - __main__ - INFO - Test Accuracy: 0.9193
+2026-02-14 03:08:12,808 - __main__ - INFO - Test ROC-AUC: 0.8665
+2026-02-14 03:08:12,818 - __main__ - INFO - 
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.95      0.96      0.96       264
+           1       0.44      0.38      0.41        21
+
+    accuracy                           0.92       285
+   macro avg       0.70      0.67      0.68       285
+weighted avg       0.91      0.92      0.92       285
+
+2026-02-14 03:08:12,826 - __main__ - INFO - 
+Top 10 Features:
+               feature  importance
+1753           fp_1729    0.030943
+1440           fp_1416    0.023289
+402             fp_378    0.022932
+11        FormalCharge    0.022163
+449             fp_425    0.015860
+855             fp_831    0.015489
+87               fp_63    0.014835
+22    MinPartialCharge    0.014643
+651             fp_627    0.014575
+1953           fp_1929    0.012955
+2026-02-14 03:08:12,844 - __main__ - INFO - Model saved to D:\chopper\project\insilico_lab\models/clintox
+2026-02-14 03:09:00,929 - __main__ - INFO - Loading features from D:\chopper\project\insilico_lab\data/processed/herg_features.csv
+2026-02-14 03:09:01,161 - __main__ - INFO - Loaded 1942 samples
+2026-02-14 03:09:01,168 - __main__ - INFO - Features shape: (1942, 2072)
+2026-02-14 03:09:01,170 - __main__ - INFO - Class distribution:
+hERG
+1       0.000515
+2       0.000515
+3       0.000515
+4       0.000515
+5       0.000515
+          ...   
+2048    0.000515
+2049    0.000515
+2050    0.000515
+2052    0.000515
+2053    0.000515
+Name: proportion, Length: 1942, dtype: float64
+2026-02-14 11:44:51,549 - src.admet.tox_engine - INFO - ClinTox model loaded successfully
+2026-02-14 11:44:51,556 - src.feature_engine.descriptor_engine - ERROR - Error calculating descriptors for 'c1ccccc1': 'MW'
+2026-02-14 11:47:29,292 - src.admet.tox_engine - INFO - ClinTox model loaded successfully
+2026-02-14 11:47:29,298 - src.feature_engine.descriptor_engine - ERROR - Error calculating descriptors for 'c1ccccc1': 'MW'
+2026-02-14 11:48:58,432 - src.admet.tox_engine - INFO - ClinTox model loaded successfully
+2026-02-14 11:48:58,473 - src.admet.tox_engine - ERROR - ClinTox prediction failed: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- BertzCT
+- MolMR
+- MolWt
+- NumAromaticRings
+- NumHAcceptors
+- ...
+Feature names seen at fit time, yet now missing:
+- AromaticRings
+- RingCount
+- RotatableBonds
+
+2026-02-14 11:54:52,359 - src.admet.tox_engine - INFO - ClinTox model loaded successfully
+2026-02-14 11:54:52,432 - src.admet.tox_engine - ERROR - ClinTox prediction failed: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- AroRings
+- BertzCT
+- MolMR
+- MolWt
+- NumAromaticRings
+- ...
+
+2026-02-14 11:55:31,694 - src.admet.tox_engine - INFO - ClinTox model loaded successfully
