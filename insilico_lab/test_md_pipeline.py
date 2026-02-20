@@ -67,7 +67,7 @@ def check(condition: bool, name: str, detail: str = "") -> bool:
 # -------------------------------------------------------------------------
 def main():
     print("=" * 60)
-    print("InSilico Lab — MD Pipeline Integration Test")
+    print("Chopper — MD Pipeline Integration Test")
     print(f"  Molecule: {MOLECULE_ID}")
     print(f"  SMILES:   {ASPIRIN_SMILES}")
     print(f"  Config:   fast ({TEST_CONFIG['production_ns']*1000:.0f} ps production)")

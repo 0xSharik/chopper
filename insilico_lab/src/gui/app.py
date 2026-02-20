@@ -32,7 +32,7 @@ from src.gui.validation_tab import render_validation_tab
 
 # Page config
 st.set_page_config(
-    page_title="InSilico Lab - Drug Screening Platform",
+    page_title="Chopper - Drug Screening Platform",
     page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -121,8 +121,8 @@ def run_full_prediction(smiles, engines):
 
 def main():
     # Header
-    st.markdown('<div class="main-header">🧬 InSilico Lab</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Visual In-Silico Drug Screening Platform</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">🧬 Chopper</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Visual Chopper Drug Screening Platform</div>', unsafe_allow_html=True)
     
     # Mode selection
     mode = st.radio(
