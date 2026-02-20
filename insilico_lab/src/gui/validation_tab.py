@@ -11,7 +11,7 @@ def render_validation_tab():
     st.header("📊 Model Validation Benchmark")
     st.markdown("Validate the internal property prediction engine against consensus literature values.")
     
-    st.info("Benchmarks run against standard small molecule datasets (Aspirin, Caffeine, Ibuprofen).")
+    st.info("Benchmarks run against standard small molecule datasets (Aspirin, Acetaminophen, Phenol).")
 
     if st.button("🚀 Run LogP Benchmark", type="primary"):
         with st.spinner("Running Benchmark vs Literature..."):

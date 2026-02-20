@@ -180,7 +180,9 @@ class SystemBuilder:
         # 5b. Water Count Check
         n_water = len([r for r in modeller.topology.residues() if r.name == 'HOH'])
         logger.info(f"Water molecules: {n_water}")
-        if n_water < 1000:
+        if n_water < 700:
+            raise ValueError(f"[!] Low water count ({n_water}). Please increase 'Padding' in Advanced Configuration (current: {padding.value_in_unit(unit.nanometers):.1f} nm).")
+        elif n_water < 1000:
             logger.warning(f"⚠️ Low water count ({n_water}). PBC artifacts possible.")
 
         # 6. Create System (Enforce PME + Safe Cutoff)

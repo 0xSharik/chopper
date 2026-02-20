@@ -9,7 +9,7 @@ import openmm.unit as unit
 from src.md.config import DEFAULT_MD_CONFIG
 
 def benchmark():
-    print("🚀 Running GPU Benchmark...")
+    print("[*] Running GPU Benchmark...")
     
     # 1. Setup Dummy System (DHFR-like size or just Aspirin?)
     # Let's use Aspirin from SMILES to be realistic to user's case
@@ -17,6 +17,7 @@ def benchmark():
     
     config = DEFAULT_MD_CONFIG.copy()
     config['mode'] = 'research' # force good parameters
+    config['padding_nm'] = 1.5 # increase to ensure water count > 700
     
     print("   Building System (Aspirin + Solvent)...")
     builder = SystemBuilder(config)
@@ -57,14 +58,14 @@ def benchmark():
     ns = (steps * dt_fs) / 1e6
     speed_ns_day = (ns / elapsed) * 86400
     
-    print(f"\n🏁 Benchmark Results:")
+    print(f"\n[+] Benchmark Results:")
     print(f"   Time: {elapsed:.2f} s")
     print(f"   Speed: {speed_ns_day:.1f} ns/day")
     
     if speed_ns_day > 100:
-        print("   ✅ GPU is performing well!")
+        print("   [+] GPU is performing well!")
     else:
-        print("   ⚠️ Performance seems low (or CPU is being used).")
+        print("   [!] Performance seems low (or CPU is being used).")
 
 if __name__ == "__main__":
     benchmark()

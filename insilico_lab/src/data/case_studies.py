@@ -9,10 +9,10 @@ PRESET_CASES = {
         "description": "💊 Benzodiazepine anxiolytic - demonstrates strong CNS penetration and drug-like properties",
         "category": "CNS"
     },
-    "Ibuprofen (NSAID)": {
-        "smiles": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
-        "description": "🔥 Anti-inflammatory analgesic - shows optimal lipophilicity and low toxicity",
-        "category": "Pain Relief"
+    "Phenol (Benchmark)": {
+        "smiles": "Oc1ccccc1",
+        "description": "Benchmark compound - standard for validation and testing",
+        "category": "Reference"
     },
     "Ciprofloxacin (Antibiotic)": {
         "smiles": "C1CC1N2C=C(C(=O)c3cc(F)c(cc23)N4CCNCC4)C(=O)O",
@@ -24,10 +24,10 @@ PRESET_CASES = {
         "description": "⭐ Classic NSAID - simple, well-characterized reference compound",
         "category": "Pain Relief"
     },
-    "Caffeine (Stimulant)": {
-        "smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
-        "description": "☕ Methylxanthine stimulant - demonstrates BBB penetration and low toxicity",
-        "category": "CNS"
+    "Acetaminophen (Analgesic)": {
+        "smiles": "CC(=O)Nc1ccc(O)cc1",
+        "description": "💊 Common pain reliever - excellent RDKit logP agreement",
+        "category": "Pain Relief"
     },
     "Atorvastatin (Statin)": {
         "smiles": "CC(C)c1c(C(=O)Nc2ccccc2)c(c(c(c1)c3ccccc3)C(=O)O)c4ccc(F)cc4",

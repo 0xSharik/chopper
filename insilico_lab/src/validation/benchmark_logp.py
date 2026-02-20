@@ -25,14 +25,14 @@ class LogPBenchmark:
             "literature_logp": 1.19
         },
         {
-            "name": "Caffeine",
-            "smiles": "Cn1cnc2n(C)c(=O)n(C)c(=O)c12",
-            "literature_logp": -0.07
+            "name": "Acetaminophen",
+            "smiles": "CC(=O)Nc1ccc(O)cc1",
+            "literature_logp": 0.46
         },
         {
-            "name": "Ibuprofen",
-            "smiles": "CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O",
-            "literature_logp": 3.97
+            "name": "Phenol",
+            "smiles": "Oc1ccccc1",
+            "literature_logp": 1.46
         }
     ]
 

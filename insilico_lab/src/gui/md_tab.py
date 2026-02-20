@@ -101,6 +101,8 @@ def render_md_tab(engines=None):
                     help="Force specific compute platform. 'Auto' tries CUDA > OpenCL > CPU."
                 )
                 
+                padding = st.number_input("Padding (nm)", value=1.3, step=0.1, help="Distance between solute and box edge. Increase if water count is too low.")
+                
                 if st.button("🚀 Run Speed Test", help="Benchmark GPU performance"):
                     with st.spinner("Running Benchmark (Aspirin)..."):
                         try:
@@ -222,6 +224,7 @@ def render_md_tab(engines=None):
             "pressure": pressure,
             "production_ns": prod_ns,
             "output_frame_ps": output_ps,
+            "padding_nm": padding,
             "platform_preference": [platform] if platform != "Auto" else ["CUDA", "OpenCL", "CPU"],
         }
         
@@ -269,6 +272,7 @@ def render_md_tab(engines=None):
             "pressure": pressure,
             "production_ns": prod_ns,
             "output_frame_ps": output_ps,
+            "padding_nm": padding,
             "platform_preference": [platform] if platform != "Auto" else ["CUDA", "OpenCL", "CPU"],
         }
         
@@ -308,6 +312,7 @@ def render_md_tab(engines=None):
             "pressure": pressure,
             "production_ns": prod_ns,
             "output_frame_ps": output_ps,
+            "padding_nm": padding,
             "platform_preference": [platform] if platform != "Auto" else ["CUDA", "OpenCL", "CPU"],
         }
         
@@ -409,10 +414,21 @@ def _render_results(result):
                 pdb_block = f.read()
             
             # Create Model
+            # Create Model
             view = py3Dmol.view(width=800, height=400)
             view.addModel(pdb_block, "pdb")
-            view.setStyle({'stick': {}})
-            view.zoomTo()
+            
+            # Use 'stick' style for the ligand (UNL)
+            view.setStyle({'resn': 'UNL'}, {'stick': {'colorscheme': 'greenCarbon', 'radius': 0.2}})
+            
+            # Add spheres to the atoms to create a ball-and-stick look
+            view.addStyle({'resn': 'UNL'}, {'sphere': {'scale': 0.3, 'colorscheme': 'greenCarbon'}})
+            
+            # Hide solvent (HOH, WAT, Cl, Na) by setting their style to hidden
+            view.setStyle({'resn': ['HOH', 'WAT', 'Cl', 'Na']}, {'hidden': True})
+            
+            # Zoom to the ligand to center it
+            view.zoomTo({'resn': 'UNL'})
             
             # Show
             st.caption("Interactive 3D View (Final Frame Structure)")

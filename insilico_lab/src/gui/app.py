@@ -194,8 +194,8 @@ def render_screening_mode():
         st.markdown("### 📚 Example Molecules")
         examples = {
             "Aspirin": "CC(=O)Oc1ccccc1C(=O)O",
-            "Caffeine": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
-            "Ibuprofen": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
+            "Acetaminophen": "CC(=O)Nc1ccc(O)cc1",
+            "Phenol": "Oc1ccccc1",
             "Diazepam": "CN1C(=O)CN=C(c2ccccc2)c3cc(Cl)ccc13",
             "Penicillin G": "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O"
         }
