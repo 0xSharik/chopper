@@ -1,0 +1,22 @@
+[
+    {
+        "smiles": "CCNC(C)=O",
+        "reaction_name": "Amide formation",
+        "reaction_confidence": "High",
+        "sas": 1.93,
+        "ring": 0.0,
+        "functional": 0.0,
+        "plausibility_score": 0.97,
+        "classification": "High Synthetic Plausibility",
+        "admet_preview": {
+            "MW": 87.12,
+            "logP": 0.14,
+            "HBD": 1,
+            "HBA": 1,
+            "Ro5_status": "Pass"
+        },
+        "in_domain": false,
+        "domain_similarity": 0.216,
+        "confidence": "Low confidence synthetic plausibility"
+    }
+]

@@ -53,7 +53,7 @@ class MolecularDynamicsEngine:
         Run the full MD pipeline: Build -> Equilibrate -> Produce -> Analyze.
         """
         start_time = time.time()
-        logger.info(f"🚀 Starting MD Pipeline for '{molecule_id}'")
+        logger.info(f"Starting MD Pipeline for '{molecule_id}'")
         logger.info(f"   Mode: {self.config.get('mode', 'unknown').upper()}")
         logger.info(f"   Platform: {self.config.get('platform_preference')}")
         
@@ -122,7 +122,7 @@ class MolecularDynamicsEngine:
         result["simulation_time_ns"] = self.config["production_ns"]
         result["elapsed_wall_seconds"] = elapsed
         
-        logger.info(f"🏁 Protocol Completed in {elapsed:.2f}s")
+        logger.info(f"Protocol Completed in {elapsed:.2f}s")
         return result
 
     def _print_integrity_check(self, metrics: dict):

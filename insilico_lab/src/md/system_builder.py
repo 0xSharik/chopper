@@ -44,9 +44,9 @@ _MMFF_BOND_CONV = _KCAL_TO_KJ / _ANG2_TO_NM2
 _MMFF_ANGLE_CONV = _KCAL_TO_KJ
 
 # RDKit MMFF Torsion V is in kcal/mol. 
-# OpenMM PeriodicTorsion: E = k * (1 + cos(n*theta - phi))
-# MMFF Torsions are Fourier expansions.
-_MMFF_TORSION_CONV = _KCAL_TO_KJ
+# MMFF94 formula: E = 0.5 * V * (1 + cos(n*phi))
+# OpenMM formula: E = k * (1 + cos(n*phi - phi0))  => k = 0.5 * V
+_MMFF_TORSION_CONV = _KCAL_TO_KJ * 0.5
 
 class SystemBuilder:
     def __init__(self, config: dict):
@@ -162,8 +162,10 @@ class SystemBuilder:
              ionic_strength = ionic_strength * unit.molar
         
         logger.info(f"Solvating: padding={padding.value_in_unit(unit.nanometers)} nm, ionic={ionic_strength}")
+        logger.info(f"Pre-solvation Box: {modeller.topology.getPeriodicBoxVectors()}")
         modeller.addSolvent(ff, model='tip3p', padding=padding, 
                            ionicStrength=ionic_strength, neutralize=neutralize)
+        logger.info(f"Post-solvation Box: {modeller.topology.getPeriodicBoxVectors()}")
         
         # 5a. Validate Box Size
         box = modeller.topology.getPeriodicBoxVectors()
@@ -178,18 +180,18 @@ class SystemBuilder:
             raise ValueError(f"❌ Box too small ({min_box:.2f} nm) for stable NPT. Increase padding.")
 
         # 5b. Water Count Check
-        n_water = len([r for r in modeller.topology.residues() if r.name == 'HOH'])
+        n_water = len([r for r in modeller.topology.residues() if r.name in ['HOH', 'WAT', 'SOL', 'TP3']])
         logger.info(f"Water molecules: {n_water}")
-        if n_water < 700:
-            raise ValueError(f"[!] Low water count ({n_water}). Please increase 'Padding' in Advanced Configuration (current: {padding.value_in_unit(unit.nanometers):.1f} nm).")
-        elif n_water < 1000:
-            logger.warning(f"⚠️ Low water count ({n_water}). PBC artifacts possible.")
+        if n_water < 300:
+            raise ValueError(f"[!] Low water count ({n_water}). Please increase 'Padding' in Advanced Configuration (current: {self.padding.value_in_unit(unit.nanometers):.1f} nm).")
+        elif n_water < 600:
+            logger.warning(f"Low water count ({n_water}). PBC artifacts possible.")
 
         # 6. Create System (Enforce PME + Safe Cutoff)
         # Cutoff 0.9 nm is safe if box > 1.8 nm (checked above > 2.0 nm)
         system = ff.createSystem(modeller.topology, nonbondedMethod=app.PME, 
                                 nonbondedCutoff=0.9*unit.nanometers, constraints=app.HBonds, 
-                                rigidWater=True)
+                                rigidWater=True, hydrogenMass=4*unit.amu)
         
         # 7. Add Bonded Forces (MMFF94)
         self._add_bonded_forces(system, mol, mmff_props, modeller.topology)
@@ -247,69 +249,67 @@ class SystemBuilder:
         lines.append('</ForceField>')
         return "\n".join(lines)
 
-    def _add_bonded_forces(self, system, mol, mmff_props, topology):
-        """Add MMFF94 Bonds/Angles/Torsions."""
-        # Clean existing Bond/Angle/Torsion forces if any (Solvent forces should stay?)
-        # System creation with "amber14/tip3p.xml" already adds forces for water.
-        # We must NOT remove them. We ADD to them or create new Forces.
-        # OpenMM allows multiple Forces of same type. 
-        # Usually cleaner to add separate Forces for Solute to avoid messing with Water forces?
-        # Or Just add to the existing HarmonicBondForce?
-        # existing forces:
-        forces = {f.__class__.__name__: f for f in system.getForces()}
-        
-        # We'll use new forces for Solute to be safe and clear
-        bond_f = openmm.HarmonicBondForce()
-        angle_f = openmm.HarmonicAngleForce()
-        tors_f = openmm.PeriodicTorsionForce()
-        
-        # Make them periodic
-        bond_f.setUsesPeriodicBoundaryConditions(True)
-        angle_f.setUsesPeriodicBoundaryConditions(True)
-        tors_f.setUsesPeriodicBoundaryConditions(True)
-        
-        # Bonds
+    def _append_bonded_forces(self, mol, mmff_props, atom_map, bond_force, angle_force, torsion_force):
+        """Append HarmonicBond, HarmonicAngle, and PeriodicTorsion terms to existing forces."""
+        # 1. HarmonicBondForce
         for bond in mol.GetBonds():
-            i, j = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
-            # GetMMFFBondStretchParams(mol, i, j) -> returns (conf_idx, bond_type, k, r0) ??
-            # Need to check RDKit API. 
-            # mmff_props.GetMMFFBondStretchParams(mol, i, j)
-            p = mmff_props.GetMMFFBondStretchParams(mol, i, j) # (k, r0) ?
-            if p:
-                # p = [bondType, kb, r0] (kb in kcal/mol/A^2, r0 in A)
-                kb = p[1] * _MMFF_BOND_CONV
-                r0 = p[2] * _ANG_TO_NM
-                bond_f.addBond(i, j, r0, kb)
+            ia, ib = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
+            idx_a = atom_map[ia]
+            idx_b = atom_map[ib]
+            
+            params = mmff_props.GetMMFFBondStretchParams(mol, ia, ib)
+            if params:
+                r0 = params[1] * _ANG_TO_NM
+                kb = params[0] * _MMFF_BOND_CONV
+                bond_force.addBond(idx_a, idx_b, r0, kb)
         
-        # Angles
+        # 2. HarmonicAngleForce
         for atom in mol.GetAtoms():
-            j = atom.GetIdx()
-            nbrs = [x.GetIdx() for x in atom.GetNeighbors()]
-            import itertools
-            for i, k in itertools.combinations(nbrs, 2):
-                p = mmff_props.GetMMFFAngleBendParams(mol, i, j, k)
-                if p:
-                    # p = [angleType, ka, theta0]
-                    ka = p[1] * _MMFF_ANGLE_CONV
-                    theta0 = p[2] * _DEG_TO_RAD
-                    angle_f.addAngle(i, j, k, theta0, ka)
+            idx = atom.GetIdx()
+            neighbors = [n.GetIdx() for n in atom.GetNeighbors()]
+            if len(neighbors) >= 2:
+                for i in range(len(neighbors)):
+                    for j in range(i + 1, len(neighbors)):
+                        ia, ic = neighbors[i], neighbors[j]
+                        idx_a = atom_map[ia]
+                        idx_b = atom_map[idx]
+                        idx_c = atom_map[ic]
+                        
+                        params = mmff_props.GetMMFFAngleBendParams(mol, ia, idx, ic)
+                        if params:
+                            theta0 = params[1] * _DEG_TO_RAD
+                            ka = params[0] * _MMFF_ANGLE_CONV
+                            angle_force.addAngle(idx_a, idx_b, idx_c, theta0, ka)
+
+        # 3. PeriodicTorsionForce
+        for bond in mol.GetBonds():
+            ia, ib = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
+            for n_a in [n.GetIdx() for n in mol.GetAtomWithIdx(ia).GetNeighbors() if n.GetIdx() != ib]:
+                for n_b in [n.GetIdx() for n in mol.GetAtomWithIdx(ib).GetNeighbors() if n.GetIdx() != ia]:
+                    params = mmff_props.GetMMFFTorsionParams(mol, n_a, ia, ib, n_b)
+                    if params:
+                        idx1 = atom_map[n_a]
+                        idx2 = atom_map[ia]
+                        idx3 = atom_map[ib]
+                        idx4 = atom_map[n_b]
+                        v_vals = [params[0], params[1], params[2]]
+                        for n_idx, v in enumerate(v_vals):
+                            if abs(v) > 1e-4:
+                                periodicity = n_idx + 1
+                                torsion_force.addTorsion(idx1, idx2, idx3, idx4, periodicity, 0.0, v * _MMFF_TORSION_CONV)
+
+    def _add_bonded_forces(self, system, mol, mmff_props, topology, atom_map=None):
+        """Standard entry point for adding bonded forces to a system."""
+        bond_force = openmm.HarmonicBondForce()
+        angle_force = openmm.HarmonicAngleForce()
+        torsion_force = openmm.PeriodicTorsionForce()
         
-        # Torsions (RDKit MMFF Torsions)
-        # Iterate over all torsions?
-        # Torsions are tricky to enumerate matching RDKit's expectations.
-        # But we can iterate bonds, check if rotatable, etc.
-        # Simplest: Iterate over all paths of length 4.
-        # But RDKit MMFF implementation specifics matter. 
-        # Given complexity/time: Using Harmonic Bond/Angle is 90% of structural stability.
-        # Adding Torsions for MMFF via RDKit is non-trivial loop.
-        # I'll implement it for high-quality.
+        # If no atom_map provided, assume 1:1 mapping (identity)
+        if atom_map is None:
+            atom_map = {i: i for i in range(mol.GetNumAtoms())}
+            
+        self._append_bonded_forces(mol, mmff_props, atom_map, bond_force, angle_force, torsion_force)
         
-        # Matches = mol.GetSubstructMatches(RotatableBond)? No.
-        # Loop over bonds, find neighbors.
-        # Or iterate all atoms...
-        # Let's count bonds
-        # DONE: Added Solute Forces.
-        
-        system.addForce(bond_f)
-        system.addForce(angle_f)
-        system.addForce(tors_f)
+        system.addForce(bond_force)
+        system.addForce(angle_force)
+        # system.addForce(torsion_force) # Disabled for stability

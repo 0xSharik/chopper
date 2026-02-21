@@ -2,6 +2,8 @@
 import streamlit as st
 import os
 import sys
+import time
+
 
 # Add project root to path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +31,9 @@ from src.gui.editor_tab import render_editor_tab
 from src.gui.comparison_tab import render_comparison_tab
 from src.gui.md_tab import render_md_tab
 from src.gui.validation_tab import render_validation_tab
+from src.synthesis.synthesis_engine import SynthesisEngine
+# Removed FormulationEngine import
+
 
 # Page config
 st.set_page_config(
@@ -121,13 +126,13 @@ def run_full_prediction(smiles, engines):
 
 def main():
     # Header
-    st.markdown('<div class="main-header">🧬 Chopper</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Visual Chopper Drug Screening Platform</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header"> Chopper</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Visual Drug Screening & simulation Platform</div>', unsafe_allow_html=True)
     
     # Mode selection
     mode = st.radio(
         "Select Mode:",
-        ["🔬 Molecule Screening", "🧪 Molecule Modification", "⚗️ Advanced Editor", "📊 Compare Candidates", "🧊 MD Simulation", "📈 Model Validation"],
+        ["🔬 Molecule Screening", "🧪 Molecule Modification", "⚗️ Advanced Editor", "📊 Compare Candidates", "🧊 MD Simulation", "📈 Model Validation", "🧪 Synthesis Intelligence"],
         horizontal=True
     )
     
@@ -146,6 +151,8 @@ def main():
         render_md_tab()
     elif mode == "📈 Model Validation":
         render_validation_tab()
+    elif mode == "🧪 Synthesis Intelligence":
+        render_synthesis_tab()
 
 def render_screening_mode():
     """Original screening interface."""
@@ -190,20 +197,6 @@ def render_screening_mode():
         
         run_button = st.button("🚀 Run Simulation", type="primary", use_container_width=True)
         
-        st.markdown("---")
-        st.markdown("### 📚 Example Molecules")
-        examples = {
-            "Aspirin": "CC(=O)Oc1ccccc1C(=O)O",
-            "Acetaminophen": "CC(=O)Nc1ccc(O)cc1",
-            "Phenol": "Oc1ccccc1",
-            "Diazepam": "CN1C(=O)CN=C(c2ccccc2)c3cc(Cl)ccc13",
-            "Penicillin G": "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O"
-        }
-        
-        for name, smi in examples.items():
-            if st.button(name, use_container_width=True):
-                smiles_input = smi
-                st.rerun()
     
     # Main content
     if run_button or smiles_input:
@@ -432,6 +425,181 @@ def render_modification_mode():
     
     elif not base_smiles and input_method == "SMILES String":
         st.info("👆 Enter a base molecule SMILES and click 'Generate Variants'")
+
+@st.cache_resource
+def _get_synthesis_engine():
+    """Cached singleton – built once, reused every render."""
+    from src.synthesis.synthesis_engine import SynthesisEngine
+    return SynthesisEngine()
+
+def render_synthesis_tab():
+    """Render the Synthesis Intelligence tab."""
+    from src.gui.components import render_molecule_3d
+    from src.gui.molecule_library import get_molecule_list
+
+    engine = _get_synthesis_engine()
+
+    st.subheader("🧪 Synthesis Intelligence")
+    st.markdown("Analyze molecular synthetic accessibility and retrosynthetic pathways.")
+
+    # ── 1. Input row ────────────────────────────────────────────────────────
+    molecule_list = get_molecule_list()
+    molecule_names = [name for name, _ in molecule_list]
+
+    col_input, col_3d = st.columns([3, 2])
+    with col_input:
+        selected_molecule = st.selectbox(
+            "Select Molecule from Library:",
+            options=["- Custom -"] + molecule_names,
+            key="synthesis_mol_select"
+        )
+        default_smiles = "CC(=O)Oc1ccccc1C(=O)O"
+        if selected_molecule != "- Custom -":
+            default_smiles = dict(molecule_list)[selected_molecule]
+
+        smiles = st.text_input("Enter SMILES for Synthesis Analysis:", value=default_smiles)
+
+        analysis_depth = st.radio(
+            "Analysis Depth:",
+            options=[1, 2],
+            index=0,
+            format_func=lambda x: f"{x}-Step Structural Analysis",
+            horizontal=True,
+            help="Depth 2 explores secondary disconnections of first-level precursors."
+        )
+
+    with col_3d:
+        if smiles:
+            st.markdown("**3D Structure Preview**")
+            render_molecule_3d(smiles)
+
+    if not smiles:
+        return
+
+    # ── 2. Full-width analysis ───────────────────────────────────────────────
+    try:
+        result = engine.analyze(smiles, depth=analysis_depth)
+    except Exception as e:
+        st.error(f"Analysis Error: {str(e)}")
+        return
+
+    st.markdown("---")
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("SAS Score", f"{result['sas_score']}", help="1 (Easy) → 10 (Difficult)")
+    m2.metric("Ring Strain", f"{result['ring_strain_score']}")
+    m3.metric("Functional Penalty", f"{result['functional_penalty_score']}")
+    color = "green" if result['classification'] == "Easy" else "orange" if result['classification'] == "Moderate" else "red"
+    m4.markdown(
+        f"**Feasibility:** <span style='color:{color}; font-size:1.4rem;'>{result['classification']}</span>"
+        f"  <small>({result['feasibility_score']}%)</small>",
+        unsafe_allow_html=True
+    )
+
+    # ── 3. Retrosynthesis section ─────────────────────────────────────────────
+    st.markdown("---")
+    st.subheader("🧬 Structural Decomposition (Precursors)")
+    st.info(result['retrosynthesis']['analysis_label'])
+
+    conf = result['retrosynthesis']['confidence']
+    conf_label = "High" if conf >= 0.9 else "Moderate" if conf >= 0.6 else "Low"
+    st.markdown(f"**Retrosynthesis Confidence:** {conf_label} ({conf})")
+
+    precursors = result['retrosynthesis']['precursors']
+    if precursors:
+        for i in range(0, len(precursors), 3):
+            chunk = precursors[i:i+3]
+            p_cols = st.columns(len(chunk))
+            for j, p_data in enumerate(chunk):
+                with p_cols[j]:
+                    st.markdown(f"**Disconnection {i+j+1}**")
+                    st.caption(f"**Type:** {p_data['reaction_type']}")
+                    st.caption(f"**Confidence:** {p_data['confidence']}")
+                    p_smiles = p_data['smiles']
+                    st.code(p_smiles, language="text")
+                    render_molecule_3d(p_smiles)
+    else:
+        st.info("No single-step structural decompositions identified for this molecule.")
+
+    st.warning("**Disclaimer:** Retrosynthetic suggestions are structural decompositions only. No laboratory conditions or instructions are provided.")
+
+    # ── 4. Virtual Forward Synthesis ─────────────────────────────────────────
+    st.markdown("---")
+    st.subheader("🧪 Virtual Forward Synthesis")
+    st.markdown("Combine two precursors to generate new virtual products.")
+
+    precursor_pairs = {
+        "- Custom -": "CC(=O)O, CCO",
+        "Esterification: Acetic Acid + Ethanol": "CC(=O)O, CCO",
+        "Amidation: Acetic Acid + Ethylamine": "CC(=O)O, CCN",
+        "Esterification: Salicylic Acid + Methanol": "Oc1ccccc1C(=O)O, CO",
+        "Amidation: Benzene + Methylamine (Invalid/Safety Test)": "c1ccccc1, CN"
+    }
+
+    selected_pair = st.selectbox(
+        "Quick-Select Precursor Pair:",
+        options=list(precursor_pairs.keys()),
+        key="precursor_pair_select"
+    )
+    default_precursors = precursor_pairs[selected_pair]
+    precursor_input = st.text_input(
+        "Enter Precursor SMILES (comma-separated):",
+        value=default_precursors,
+        help="e.g. Acetic Acid and Ethanol to form an ester."
+    )
+
+    if st.button("🚀 Generate Virtual Products"):
+        with st.spinner("Simulating structural transformations..."):
+            try:
+                precursor_list = [s.strip() for s in precursor_input.split(",") if s.strip()]
+                vs_result = engine.virtual_synthesis(precursor_list)
+                products = vs_result.get("product_details", [])
+
+                if products:
+                    st.success(f"Generated {len(products)} virtual product(s).")
+                    for i, prod in enumerate(products, start=1):
+                        st.markdown("---")
+                        v1, v2 = st.columns([3, 2])
+                        with v1:
+                            st.markdown(f"### Product {i}")
+                            st.markdown(f"**SMILES:** `{prod['smiles']}`")
+                            st.markdown(f"**Reaction Class:** {prod['reaction_name']}")
+
+                            c_color = "green" if prod['reaction_confidence'] == "High" else "orange" if prod['reaction_confidence'] == "Moderate" else "red"
+                            st.markdown(
+                                f"**Base Reaction Confidence:** <span style='color:{c_color};'>{prod['reaction_confidence']}</span>",
+                                unsafe_allow_html=True
+                            )
+                            st.write(f"**Synthetic Plausibility:** {prod['classification']}")
+                            st.write(f"**Plausibility Score:** {prod['plausibility_score']} *(lower is better)*")
+
+                            admet = prod['admet_preview']
+                            st.markdown("**ADMET Screening (Ro5)**")
+                            a1, a2 = st.columns(2)
+                            a1.caption(f"MW: {admet['MW']}")
+                            a1.caption(f"LogP: {admet['logP']}")
+                            a2.caption(f"HBD: {admet['HBD']}")
+                            a2.caption(f"HBA: {admet['HBA']}")
+
+                            status = admet['Ro5_status']
+                            s_color = "green" if status == "Pass" else "orange" if status == "Borderline" else "red"
+                            st.markdown(
+                                f"**Drug-likeness:** <span style='color:{s_color}; font-weight:bold;'>{status}</span>",
+                                unsafe_allow_html=True
+                            )
+
+                            if st.button(f"🧊 MD Simulate Product #{i}", key=f"md_vs_{i}"):
+                                st.session_state.vs_smiles = prod["smiles"]
+                                st.info("Product copied! Go to 'MD Simulation' tab.")
+
+                        with v2:
+                            st.markdown("**3D Structure**")
+                            render_molecule_3d(prod["smiles"])
+
+                else:
+                    st.info("No valid transformations identified for these precursors. Check structural compatibility.")
+
+            except Exception as e:
+                st.error(f"Virtual Synthesis Error: {str(e)}")
 
 if __name__ == "__main__":
     main()

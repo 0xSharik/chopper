@@ -1,0 +1,22 @@
+[
+    {
+        "smiles": "CCOC(C)=O",
+        "reaction_name": "Ester formation",
+        "reaction_confidence": "High",
+        "sas": 1.76,
+        "ring": 0.0,
+        "functional": 0.0,
+        "plausibility_score": 0.885,
+        "classification": "High Synthetic Plausibility",
+        "admet_preview": {
+            "MW": 88.11,
+            "logP": 0.57,
+            "HBD": 0,
+            "HBA": 2,
+            "Ro5_status": "Pass"
+        },
+        "in_domain": false,
+        "domain_similarity": 0.263,
+        "confidence": "Low confidence synthetic plausibility"
+    }
+]

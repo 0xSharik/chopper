@@ -1,0 +1,17 @@
+[
+    {
+        "smiles": "O=C(O)CCl",
+        "sas_score": 2.26,
+        "feasibility_score": 11.3
+    },
+    {
+        "smiles": "CCC(=O)O",
+        "sas_score": 1.64,
+        "feasibility_score": 8.2
+    },
+    {
+        "smiles": "CC=O",
+        "sas_score": 3.04,
+        "feasibility_score": 15.2
+    }
+]

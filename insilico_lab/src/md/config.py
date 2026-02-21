@@ -28,7 +28,7 @@ DEFAULT_MD_CONFIG = {
     # ------------------------------------------------------------------
     # Integrator
     # ------------------------------------------------------------------
-    "timestep_fs": 2.0,           # femtoseconds per MD step
+    "timestep_fs": 1.0,           # femtoseconds per MD step (Safest for multi-solute equilibration)
     "friction_coeff": 1.0,        # ps^-1 (Langevin thermostat friction)
 
     # ------------------------------------------------------------------
@@ -68,13 +68,13 @@ def get_config_for_mode(mode: str) -> dict:
     base["mode"] = mode
     
     if mode == "demo":
-        # Hackathon Demo Mode: Fast, approximate, just to show it works
+        # Hackathon Demo Mode: Ultra-fast protocols for quick demos
         base.update({
-            "production_ns": 0.1,        # 100 ps production
-            "equilibration_nvt_ps": 20.0, # 20 ps NVT ( increased for stability)
-            "equilibration_npt_ps": 50.0, # 50 ps NPT ( increased for density conv)
-            "energy_minimization_steps": 1000,
-            "output_frame_ps": 1.0,      # More frequent frames for smooth short viz
+            "production_ns": 0.05,        # 50 ps production
+            "equilibration_nvt_ps": 10.0, # 10 ps NVT
+            "equilibration_npt_ps": 20.0, # 20 ps NPT
+            "energy_minimization_steps": 500,
+            "output_frame_ps": 1.0,      # Smooth shorter viz
         })
     elif mode == "research":
         # Full Research Mode: Rigorous, publishable sampling

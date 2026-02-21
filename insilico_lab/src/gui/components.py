@@ -75,7 +75,7 @@ def render_physicochemical_tab(properties):
             return prop_data.get('value') or prop_data.get('prediction')
         return prop_data
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     
     with col1:
         logs = get_val(properties.get('logS'))
@@ -85,21 +85,7 @@ def render_physicochemical_tab(properties):
         logp = get_val(properties.get('logP'))
         st.metric("LogP (Lipophilicity)", f"{logp:.2f}" if logp is not None else "N/A")
     
-    with col3:
-        logd = get_val(properties.get('logD'))
-        st.metric("LogD (pH 7.4)", f"{logd:.2f}" if logd is not None else "N/A")
     
-    st.markdown("### Ionization")
-    
-    pka = properties.get('pKa', {})
-    if isinstance(pka, dict):
-        col1, col2 = st.columns(2)
-        with col1:
-            acidic = get_val(pka.get('acidic'))
-            st.metric("pKa (Acidic)", f"{acidic:.2f}" if acidic is not None else "N/A")
-        with col2:
-            basic = get_val(pka.get('basic'))
-            st.metric("pKa (Basic)", f"{basic:.2f}" if basic is not None else "N/A")
 
 def render_permeability_tab(permeability):
     """Render permeability tab."""

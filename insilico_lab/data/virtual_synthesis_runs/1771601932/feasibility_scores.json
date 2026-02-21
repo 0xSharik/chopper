@@ -1,0 +1,15 @@
+[
+    {
+        "smiles": "CCOC(C)=O",
+        "sas": 1.76,
+        "ring": 0.0,
+        "functional": 0.0,
+        "plausibility_score": 1.056,
+        "in_domain": false,
+        "domain_similarity": 0.263,
+        "confidence": "Low confidence synthetic plausibility",
+        "feasibility_score": 10.56,
+        "sas_score": 1.76,
+        "classification": "Easy"
+    }
+]

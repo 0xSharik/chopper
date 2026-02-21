@@ -47,22 +47,28 @@ class EquilibrationEngine:
         valid_platforms = [p.getName() for p in [openmm.Platform.getPlatform(i) for i in range(openmm.Platform.getNumPlatforms())]]
         logger.info(f"Available Platforms: {valid_platforms}")
         
-        # User preference
-        for pref in self.config.get("platform_preference", ["CUDA", "OpenCL", "CPU"]):
+        # User preference + Standard fallbacks
+        search_list = self.config.get("platform_preference", ["CUDA", "OpenCL", "CPU"])
+        # Ensure standard fallbacks are always tried if the preferred ones fail
+        for fallback in ["CUDA", "OpenCL", "CPU"]:
+            if fallback not in search_list:
+                search_list.append(fallback)
+
+        for pref in search_list:
             if pref in valid_platforms:
                 try:
                     platform = openmm.Platform.getPlatformByName(pref)
                     if pref in ["CUDA", "OpenCL"]:
                         props = {"Precision": "mixed"}
-                    logger.info(f"Using Platform: {pref}")
+                    logger.info(f"Selected Compute Device: {pref}")
                     break
                 except Exception as e:
                     logger.warning(f"Failed to initialize {pref}: {e}")
         
         if platform is None:
-             # Fallback
+             # absolute fallback
              platform = openmm.Platform.getPlatform(0)
-             logger.warning(f"Using default platform: {platform.getName()}")
+             logger.warning(f"Using default fallback platform: {platform.getName()} (Likely very slow!)")
 
         return self._run_protocol(platform, props)
 
@@ -93,7 +99,7 @@ class EquilibrationEngine:
 
         simulation.minimizeEnergy(
             tolerance=tolerance,
-            maxIterations=self.config["energy_minimization_steps"],
+            maxIterations=2000,
         )
 
         state_post = simulation.context.getState(getEnergy=True, getPositions=True)
